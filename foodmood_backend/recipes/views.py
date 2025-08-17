@@ -11,7 +11,7 @@ class FusionRecipeView(APIView):
         cuisines = request.data.get('cuisines', [])
         servings = request.data.get('servings', 2)
         meal_type = request.data.get('meal_type', 'main course')
-        api_key = '52803135113d4694876d85eb61113123'
+        api_key = 'config("SPOONACULAR_API_KEY")'
         url = f'https://api.spoonacular.com/recipes/complexSearch'
         params = {
             'cuisine': ','.join(cuisines),
