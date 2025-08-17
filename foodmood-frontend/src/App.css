@@ -48,3 +48,16 @@
   border-radius: 8px;
   background: #f9f9f9;
 }
+.poetic-prompt {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #444;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  text-align: center;
+}
+button {
+  background: linear-gradient(to right, #ff7f50, #ffcc70);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
