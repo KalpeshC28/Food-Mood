@@ -3,35 +3,25 @@ import CuisineSelector from './components/CuisineSelector';
 import MealTypeSelector from './components/MealTypeSelector';
 import ServingInput from './components/ServingInput';
 import './styles/App.css';
+import RecipeCard from './components/RecipeCard';
 
 function App() {
   const [cuisine1, setCuisine1] = useState('');
   const [cuisine2, setCuisine2] = useState('');
   const [mealType, setMealType] = useState('');
   const [servings, setServings] = useState(1);
+  const [recipes, setRecipes] = useState([]);
 
-  const handleSubmit = async () => {
-  try {
-    const response = await fetch('http://localhost:8000/api/fusion/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        cuisine1,
-        cuisine2,
-        servings,
-        mealType,
-      }),
-    });
+const handleSubmit = async () => {
+  const response = await fetch('http://127.0.0.1:8000/api/recipes/fusion/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cuisine1, cuisine2, servings, mealType }),
+  });
 
-    const data = await response.json();
-    console.log(data); // You can display this later
-  } catch (error) {
-    console.error("Error fetching recipes:", error);
-  }
+  const data = await response.json();
+  setRecipes(data.results || []);
 };
-
   return (
     <div className="app-container">
       <h2>🍽️ FoodMood Fusion</h2>

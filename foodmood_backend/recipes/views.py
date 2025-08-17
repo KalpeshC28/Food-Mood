@@ -1,6 +1,8 @@
+import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from decouple import config
 
 class FusionRecipeView(APIView):
     def post(self, request):
@@ -9,6 +11,17 @@ class FusionRecipeView(APIView):
         servings = request.data.get('servings')
         mealType = request.data.get('mealType')
 
-        return Response({
-            "message": f"Fusion of {cuisine1} and {cuisine2} for {servings} servings of {mealType} coming right up!"
-        }, status=status.HTTP_200_OK)
+        query = f"{cuisine1} {cuisine2} {mealType} fusion"
+        url = "https://api.spoonacular.com/recipes/complexSearch"
+        params = {
+            "query": query,
+            "number": 5,
+            "apiKey": config("SPOONACULAR_API_KEY")
+        }
+
+        try:
+            response = requests.get(url, params=params)
+            data = response.json()
+            return Response(data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
