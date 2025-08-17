@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+from decouple import config
+SPOONACULAR_API_KEY = config('SPOONACULAR_API_KEY')
 from pathlib import Path
 from decouple import config
 
@@ -23,10 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=True, cast=bool)
 
+HEAD
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+97f1da8b8f3d888a97c4aa5fb871fd9e7f62c2c0
 
 
 # Application definition
@@ -40,11 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'recipes',
     'foodapp',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -132,5 +142,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+HEAD
 # Spoonacular API Key
 SPOONACULAR_API_KEY = "52803135113d4694876d85eb61113123"
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React frontend
+]
+
+97f1da8b8f3d888a97c4aa5fb871fd9e7f62c2c0

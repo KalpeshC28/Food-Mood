@@ -17,7 +17,7 @@ class FusionRecipeView(APIView):
             'cuisine': ','.join(cuisines),
             'number': 5,
             'type': meal_type,
-            'apiKey': api_key
+            api_key = settings.SPOONACULAR_API_KEY
         }
         r = requests.get(url, params=params)
         return Response(r.json())
