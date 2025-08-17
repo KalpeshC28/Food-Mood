@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from decouple import config
 SPOONACULAR_API_KEY = config('SPOONACULAR_API_KEY')
 from pathlib import Path
-from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,17 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=True, cast=bool)
 
-HEAD
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://localhost:3000",  # React frontend — where moods meet meals
+    "http://127.0.0.1:3000",  # Local dev — where ideas simmer
 ]
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-97f1da8b8f3d888a97c4aa5fb871fd9e7f62c2c0
 
 
 # Application definition
@@ -142,12 +139,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-HEAD
-# Spoonacular API Key
-SPOONACULAR_API_KEY = "52803135113d4694876d85eb61113123"
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React frontend
-]
-
-97f1da8b8f3d888a97c4aa5fb871fd9e7f62c2c0
