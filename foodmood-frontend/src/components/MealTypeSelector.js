@@ -1,5 +1,3 @@
-import React from 'react';
-
 function MealTypeSelector({ mealType, setMealType }) {
   return (
     <div>
