@@ -1,23 +1,24 @@
-from django.shortcuts import render
-
-# Create your views here.
+# recipes/views.py
 import requests
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.conf import settings
+from decouple import config
 
-class FusionRecipeView(APIView):
-    def post(self, request):
-        cuisines = request.data.get('cuisines', [])
-        servings = request.data.get('servings', 2)
-        meal_type = request.data.get('meal_type', 'main course')
-        api_key = 'config("SPOONACULAR_API_KEY")'
-        url = f'https://api.spoonacular.com/recipes/complexSearch'
-        params = {
-            'cuisine': ','.join(cuisines),
-            'number': 5,
-            'type': meal_type,
-            api_key = settings.SPOONACULAR_API_KEY
-        }
-        r = requests.get(url, params=params)
-        return Response(r.json())
+@api_view(['POST'])
+def get_fusion_recipes(request):
+    data = request.data
+    cuisine_1 = data['cuisine1']
+    cuisine_2 = data['cuisine2']
+    servings = data['servings']
+    meal_type = data['mealType']
+
+    query = f"{cuisine_1} {cuisine_2} {meal_type} fusion"
+    url = f"https://api.spoonacular.com/recipes/complexSearch"
+    params = {
+        "query": query,
+        "number": 5,
+        "apiKey": config("SPOONACULAR_API_KEY")
+    }
+
+    response = requests.get(url, params=params)
+    return Response(response.json())
