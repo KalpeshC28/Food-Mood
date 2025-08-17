@@ -10,10 +10,27 @@ function App() {
   const [mealType, setMealType] = useState('');
   const [servings, setServings] = useState(1);
 
-  const handleSubmit = () => {
-    console.log({ cuisine1, cuisine2, mealType, servings });
-    // You can trigger your API call here
-  };
+  const handleSubmit = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/api/fusion/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cuisine1,
+        cuisine2,
+        servings,
+        mealType,
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data); // You can display this later
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+  }
+};
 
   return (
     <div className="app-container">
