@@ -1,16 +1,16 @@
-# recipes/views.py
-import requests
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from decouple import config
+from rest_framework import status
 
-@api_view(['POST'])
-def get_fusion_recipes(request):
-    data = request.data
-    cuisine_1 = data['cuisine1']
-    cuisine_2 = data['cuisine2']
-    servings = data['servings']
-    meal_type = data['mealType']
+class FusionRecipeView(APIView):
+    def post(self, request):
+        # Extract data from request
+        cuisine1 = request.data.get('cuisine1')
+        cuisine2 = request.data.get('cuisine2')
+        servings = request.data.get('servings')
+        mealType = request.data.get('mealType')
+
+
 
     query = f"{cuisine_1} {cuisine_2} {meal_type} fusion"
     url = f"https://api.spoonacular.com/recipes/complexSearch"
@@ -21,4 +21,6 @@ def get_fusion_recipes(request):
     }
 
     response = requests.get(url, params=params)
-    return Response(response.json())
+   return Response({
+            "message": f"Fusion of {cuisine1} and {cuisine2} for {servings} servings of {mealType} coming right up!"
+        }, status=status.HTTP_200_OK)
